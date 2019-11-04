@@ -56,8 +56,8 @@ class StoreTest {
     }
 
     @Test
-    void getArticle_WhenArticleDoNotExist_ThenThrowNoSuchElementException() {
-        assertThrows(NoSuchElementException.class, () -> store.getArticle("Banana"));
+    void getArticle_WhenArticleDoNotExist_ThenThrowArticleNotFoundException() {
+        assertThrows(ArticleNotFoundException.class, () -> store.getArticle("Banana"));
     }
 
     @Test

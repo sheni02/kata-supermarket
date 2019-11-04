@@ -22,8 +22,8 @@ class BasketItemTest {
     }
 
     @Test
-    void testCreateItem_WhenArticleDoNotExistInTheStore_ThrowsNoSuchElementException() {
-        assertThrows(NoSuchElementException.class, () -> BasketItem.createItem("Bana", store));
+    void testCreateItem_WhenArticleDoNotExistInTheStore_ThrowsArticleNotFoundException() {
+        assertThrows(ArticleNotFoundException.class, () -> BasketItem.createItem("Bana", store));
     }
 
     @Test

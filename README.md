@@ -12,9 +12,9 @@
  
  | Item | Price($) |
  | ------ | ------ |
- | Apple | 0.20[PlDb] |
- | Orange | 0.50[PlGh] |
- | Watermelon | 0.80[PlGd] |
+ | Apple | 0.20 |
+ | Orange | 0.50 |
+ | Watermelon | 0.80 |
  
  
  We would like to allow the following special offers: 
@@ -27,6 +27,6 @@
  
   | Item | Quantity |
    | ------ | ------ |
-   | Apple | 4[PlDb] |
-   | Orange | 3[PlGh] |
-   | Watermelon | 5[PlGd] |
+   | Apple | 4 |
+   | Orange | 3 |
+   | Watermelon | 5 |

@@ -1,4 +1,6 @@
-package fr.adlere.bnp.supermarket.checkout;
+package fr.adlere.bnp.supermarket.checkout.store;
+
+import fr.adlere.bnp.supermarket.checkout.discount.NForThePriceOfMDiscount;
 
 /**
  * Article class representing a store product.

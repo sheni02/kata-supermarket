@@ -1,9 +1,14 @@
-package fr.adlere.bnp.supermarket.checkout;
+package fr.adlere.bnp.supermarket.checkout.basket;
+
+import fr.adlere.bnp.supermarket.checkout.exception.ArticleNotFoundException;
+import fr.adlere.bnp.supermarket.checkout.store.Store;
+import fr.adlere.bnp.supermarket.checkout.discount.NForThePriceOfMDiscount;
+import fr.adlere.bnp.supermarket.checkout.util.ItemUtils;
+import fr.adlere.bnp.supermarket.checkout.util.PrintUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 /**
  * The Basket class that checkouts the items and calculate their total price
@@ -30,8 +35,9 @@ public class Basket {
 	/**
 	 * Scan Articles and create the their corresponding items and/or update their
 	 * quantities.
+	 * One article at the time.
 	 * 
-	 * @param scannedArticle
+	 * @param scannedArticle String name of the article
 	 **/
 	public void scan(String scannedArticle) {
 		this.scan(scannedArticle, 1);
@@ -41,8 +47,8 @@ public class Basket {
 	 * Scan Articles and create the their corresponding items and/or update their
 	 * quantities.
 	 * 
-	 * @param scannedArticle
-	 * @param scannedQuantity
+	 * @param scannedArticle String name of the scanned article
+	 * @param scannedQuantity the quantity of the article
 	 **/
 	public void scan(String scannedArticle, int scannedQuantity) {
 		BasketItem basketItem = basketItems.get(scannedArticle);
@@ -50,7 +56,7 @@ public class Basket {
 			try {
 				BasketItem scannedItem = BasketItem.createItem(scannedArticle, scannedQuantity, store);
 				basketItems.put(scannedArticle, scannedItem);
-			} catch (NoSuchElementException e) {
+			} catch (ArticleNotFoundException e) {
 				System.out.println("Sorry ! '" + scannedArticle+ "' doesn't exist in the store !");
 			}
 		} else {
@@ -65,13 +71,14 @@ public class Basket {
 	 * @return the total price of the scanned items.
 	 */
 	public double total() {
-		basketItems.values().stream().forEach(item -> {
+		basketItems.values().forEach(item -> {
 			PrintUtils.printLine((item),calculatePriceBeforeDiscount(item));
 			PrintUtils.printLineDiscount(item);
 		});
 		double totalPrice = basketItems.values()
 				.parallelStream()
-				.collect(Collectors.summingDouble(item -> calculateItemTotal(item)));
+				.mapToDouble(this::calculateItemTotal)
+				.sum();
 
 		return ItemUtils.round(totalPrice, 2);
 	}
@@ -82,7 +89,7 @@ public class Basket {
 	 * @param item a BasketItem object
 	 * @return total price per item
 	 */
-	public double calculateItemTotal(BasketItem item) {
+	private double calculateItemTotal(BasketItem item) {
 		double price = calculatePriceBeforeDiscount(item);
 		NForThePriceOfMDiscount discount = item.getArticle().getDiscount();
 		if (discount != null) {
@@ -100,7 +107,7 @@ public class Basket {
 	 * @param item a BasketItem object
 	 * @return total price per item before discounts
 	 */
-	public double calculatePriceBeforeDiscount(BasketItem item) {
+	private double calculatePriceBeforeDiscount(BasketItem item) {
 		return ItemUtils.round(item.getQuantity() * item.getArticle().getPrice(), 2);
 	}
 	

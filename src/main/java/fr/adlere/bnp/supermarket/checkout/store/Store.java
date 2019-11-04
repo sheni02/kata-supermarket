@@ -1,8 +1,12 @@
-package fr.adlere.bnp.supermarket.checkout;
+package fr.adlere.bnp.supermarket.checkout.store;
+
+import fr.adlere.bnp.supermarket.checkout.discount.NForThePriceOfMDiscount;
+import fr.adlere.bnp.supermarket.checkout.exception.ArticleNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
+
+import static fr.adlere.bnp.supermarket.checkout.util.Constants.*;
 
 /**
  * The store class contains the articles list.
@@ -32,9 +36,9 @@ public class Store {
 	private static Map<String, Article> createArticles() {
 		Map<String, Article> arts = new HashMap<>();
 		
-		Article apple = Article.createArticle("Apple", 0.20, NForThePriceOfMDiscount.createDiscount(2, 1));
-		Article orange = Article.createArticle("Orange", 0.50);
-		Article watermelon =Article.createArticle("Watermelon", 0.80, NForThePriceOfMDiscount.createDiscount(3, 2));
+		Article apple = Article.createArticle(APPLE, 0.20, NForThePriceOfMDiscount.createDiscount(2, 1));
+		Article orange = Article.createArticle(ORANGE, 0.50);
+		Article watermelon =Article.createArticle(WATERMELON, 0.80, NForThePriceOfMDiscount.createDiscount(3, 2));
 		
 		arts.put(apple.getName(), apple);
 		arts.put(orange.getName(), orange);
@@ -45,17 +49,18 @@ public class Store {
 
 	/**
 	 * Look an return the article object in the list of the given articleName
-	 * @param articleName
+	 * @param articleName string article name
 	 * @return return the article object corresponding to the articleName in
-	 *         parameter or NoSuchElementException is thrown if the article doesn't exist in the store
+	 *         parameter or ArticleNotFoundException is thrown if the article doesn't exist in the store
+	 * @throws ArticleNotFoundException if the article doesn't exist in the store
 	 */
-	public Article getArticle(String articleName)  {
+	public Article getArticle(String articleName) throws ArticleNotFoundException {
 		Article article = articles.get(articleName);
 		if (article != null) {
 			return article;
 		}
 
-		throw new NoSuchElementException("No article found with the name '" + articleName + "' in the Store");
+		throw new ArticleNotFoundException("No article found with the name '" + articleName + "' in the Store");
 	}	
 	
 }

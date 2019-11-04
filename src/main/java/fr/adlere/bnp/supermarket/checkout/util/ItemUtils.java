@@ -1,11 +1,15 @@
-package fr.adlere.bnp.supermarket.checkout;
+package fr.adlere.bnp.supermarket.checkout.util;
 
 
 public class ItemUtils {
-	
+
+	private ItemUtils() {
+		throw new IllegalStateException("Utility class can't be instantiated");
+	}
+
 	/**
 	 * Round a double value to n decimal  
-	 * @param value
+	 * @param value the double number to round
 	 * @param n number of decimal
 	 * @return a rounded double with n decimal
 	 */

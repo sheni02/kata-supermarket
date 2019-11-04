@@ -1,5 +1,9 @@
 package fr.adlere.bnp.supermarket.checkout;
 
+import fr.adlere.bnp.supermarket.checkout.basket.Basket;
+import fr.adlere.bnp.supermarket.checkout.store.Store;
+import fr.adlere.bnp.supermarket.checkout.util.PrintUtils;
+
 import java.util.Arrays;
 
 /**
@@ -10,6 +14,8 @@ import java.util.Arrays;
  */
 public class App {
 
+	private static final String BULK_CHECKOUT = "bulk";
+
 	public static void main(String[] args) {
 
 		Store store = Store.createStore();
@@ -17,10 +23,8 @@ public class App {
 
 		if (args.length > 0) {
 			PrintUtils.printHeader();
-			if (!args[0].equalsIgnoreCase("bulk")) {
-				Arrays.stream(args).forEach(articleName -> {
-					basket.scan(articleName);
-				});
+			if (!args[0].equalsIgnoreCase(BULK_CHECKOUT)) {
+				Arrays.stream(args).forEach(basket::scan);
 			} else {
 				try {
 					for (int i = 1; i < args.length - 1; i += 2) {

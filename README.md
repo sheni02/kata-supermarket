@@ -1,4 +1,4 @@
-##Supermarket checkout Kata
+## Supermarket checkout Kata
 
 
 #### Minimum required to run

@@ -1,10 +1,13 @@
 ##Supermarket checkout Kata
 
-####Minimum required to run
+
+#### Minimum required to run
 * Java 8
  
  
- ####Kata description
+ 
+ #### Kata description
+ 
  We are a national supermarket chain that is interested in starting to use special offers in our stores. We stock the following products:
  
  | Item | Price($) |
